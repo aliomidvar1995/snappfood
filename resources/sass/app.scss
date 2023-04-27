@@ -1,0 +1,209 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+@font-face {
+    /* تعریف نام فونت */
+    font-family: 'BZar';
+    /* اکسپلورر 9 به بعد */
+    src: url('http://example.com/fonts/BZar.eot');
+    /* بررسی نصب بودن فونت در سیستم کاربر */
+    src: local('bZar'),
+         /* برای برخی از مرورگرها مانند سافاری */
+         local('b Zar'),
+         /* هک برای اکسپلورر 8 و ماقبل */
+         url('http://example.com/fonts/BZar.eot?#iefix') format('embedded-opentype'),
+         /* فرمت مناسب مرورگرهای خیلی جدید */
+         url('http://example.com/fonts/BZar.woff2') format('woff2'),
+         /* فرمت مناسب مرورگرهای تقریبا جدید */
+         url('http://example.com/fonts/BZar.woff') format('woff'),
+         /* تمام مرورگرها به جزء اکسپلورر */
+         url('http://example.com/fonts/BZar.ttf') format('truetype'),
+         /* نسخه های قدیمی سیستم عامل iOS */
+         url('http://example.com/fonts/BZar.svg#BZar') format('svg');
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+}
+
+body {
+  overflow-y: scroll;
+  min-height: 100vh !important;
+  min-height: -webkit-fill-available;
+  font-family: BZar, Tahoma, Geneva, sans-serif;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+.header {
+    margin: 20px;
+    height: 80vh;
+    background-image: url('/public/images/hero-image.png');
+    object-fit: cover;
+    background-repeat: no-repeat;
+}
+
+.register {
+    background-color: #fff;
+    color: #990056;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: none;
+    transition: all 800ms;
+}
+.register:hover {
+    background-color: #990056;
+    color: #fff;
+}
+.login {
+    background-color: #fff;
+    color: #560088;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: none;
+    transition: all 800ms;
+}
+.login:hover {
+    background-color: #560088;
+    color: #fff;
+}
+
+#login, #register, #reset {
+    background-image: url('/public/images/hero-image.png');
+    object-fit: cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
+// sidebar
+
+
+  
+  main {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+  
+  .b-example-divider {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
+  
+  .bi {
+    vertical-align: -.125em;
+    pointer-events: none;
+    fill: currentColor;
+  }
+  
+  .dropdown-toggle { outline: 0; }
+  
+  .nav-flush .nav-link {
+    border-radius: 0;
+  }
+  
+  .btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: .25rem .5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .65);
+    background-color: transparent;
+    border: 0;
+  }
+//   .btn-toggle:hover,
+//   .btn-toggle:focus {
+//     color: rgba(0, 0, 0, .85);
+//     background-color: #d2f4ea;
+//   }
+  
+  .btn-toggle::after {
+    width: 1.25em;
+    line-height: 0;
+    transform: rotate(180deg);
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,255,255,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+    transition: transform .35s ease;
+    transform-origin: .5em 50%;
+  }
+  
+  .btn-toggle[aria-expanded="true"] {
+    color: rgba(0, 0, 0, .85);
+  }
+  .btn-toggle[aria-expanded="true"]::after {
+    transform: rotate(90deg);
+  }
+  
+  .btn-toggle-nav a {
+    display: inline-flex;
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+    text-decoration: none;
+  }
+  .btn-toggle-nav a:hover,
+  .btn-toggle-nav a:focus {
+    background-color: #d2f4ea;
+  }
+  
+  .scrollarea {
+    overflow-y: auto;
+  }
+  
+  .fw-semibold { font-weight: 600; }
+  .lh-tight { line-height: 1.25; }
+
+
+// navbar
+
+.bg-custom-1 {
+    background-color: #85144b;
+}
+
+.bg-custom-2 {
+    background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+
+#admin-sidebar {
+    overflow-y: auto;
+    min-height: 100vh;
+    max-height: 100vh;
+    width: 280px;
+}
+
+// scrollbar
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
