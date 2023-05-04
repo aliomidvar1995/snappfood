@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\OffController;
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::prefix('/admin')->name('admin.')->group(function () {
+    Route::prefix('/admin')->middleware(['is-admin'])->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/edit', [AdminController::class, 'edit'])->name('edit');
         Route::put('/', [AdminController::class, 'update'])->name('update');
@@ -35,8 +37,11 @@ Route::middleware('auth')->group(function () {
             ->except(['show']);
         Route::resource('offs', OffController::class)
             ->except(['show']);
+        Route::resource('banners', BannerController::class)
+            ->except(['show']);
+        Route::get('/banners/show', [BannerController::class, 'show'])->name('banners.show');
     });
-    Route::prefix('/seller')->name('seller.')->group(function () {
+    Route::prefix('/seller')->middleware(['is-seller'])->name('seller.')->group(function () {
         Route::get('/', [SellerController::class, 'index'])->name('index');
         Route::get('/edit', [SellerController::class, 'edit'])->name('edit');
         Route::put('/', [SellerController::class, 'update'])->name('update');
@@ -48,5 +53,7 @@ Route::middleware('auth')->group(function () {
             ->name('foods.create');
         Route::get('foods/{food}/edit/{restaurant}', [FoodController::class, 'edit'])
             ->name('foods.edit');
+        Route::post('foods/{food}/food-party', [FoodController::class, 'foodParty'])
+            ->name('foods.foodParty');
     });
 });

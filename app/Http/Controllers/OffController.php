@@ -18,10 +18,10 @@ class OffController extends Controller
         if($request->search) {
             $offs = Off::query()
                         ->where('off', 'like', "%$request->search%")
-                        ->get();
+                        ->paginate(5);
             return view('admin.off.index', compact('offs'));
         }
-        $offs = Off::all();
+        $offs = Off::query()->paginate(5);
         return view('admin.off.index', compact('offs'));
     }
 
@@ -43,7 +43,7 @@ class OffController extends Controller
             'off' => $request->off,
             'food_categories_id' => $request->food_categories_id
         ]);
-        return to_route('admin.offs.index');
+        return to_route('admin.offs.index')->with('store', 'اطلاعات با موفقیت ذخیره شد');
     }
 
     /**
@@ -70,7 +70,7 @@ class OffController extends Controller
         $off->update([
             'off' => $request->off
         ]);
-        return to_route('admin.offs.index');
+        return to_route('admin.offs.index')->with('update', 'اطلاعات با موفقیت بروزرسانی شد');
     }
 
     /**
@@ -79,6 +79,6 @@ class OffController extends Controller
     public function destroy(Off $off)
     {
         $off->delete();
-        return to_route('admin.offs.index');
+        return to_route('admin.offs.index')->with('delete', 'اطلاعات با موفقیت حذف شد');
     }
 }

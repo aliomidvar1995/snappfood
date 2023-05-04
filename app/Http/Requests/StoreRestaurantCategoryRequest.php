@@ -22,15 +22,7 @@ class StoreRestaurantCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string']
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'required' => 'تمامی فیلد ها باید پر شوند',
-            'string' => 'این فیلد باید حروف باشد'
+            'name' => ['required', 'string', 'unique:restaurant_categories']
         ];
     }
 }

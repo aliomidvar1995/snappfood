@@ -24,11 +24,11 @@ class FoodCategory extends Model
 
     public function off(): HasOne
     {
-        return $this->hasOne(Off::class);
+        return $this->hasOne(Off::class, 'food_categories_id');
     }
 
     public function foods(): HasMany
     {
-        return $this->hasMany(Food::class);
+        return $this->hasMany(Food::class, 'food_categories_id');
     }
 }

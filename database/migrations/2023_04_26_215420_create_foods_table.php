@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('foods', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
             $table->string('name');
             $table->integer('price');
             $table->integer('discounted_price');
+            $table->integer('food_party_price');
+            $table->text('material')->nullable();
             $table->unsignedBigInteger('food_categories_id');
             $table->unsignedBigInteger('restaurant_id');
             $table->timestamps();

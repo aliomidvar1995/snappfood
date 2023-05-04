@@ -93,6 +93,19 @@
                         </ul>
                     </div>
                 </li>
+                <li class="mb-1">
+                    <button class="btn btn btn-toggle align-items-center rounded collapsed text-white" data-bs-toggle="collapse"
+                        data-bs-target="#banner-collapse" aria-expanded="false">
+                        بنر
+                    </button>
+                    <div class="collapse" id="banner-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li><a href="{{ route('admin.banners.create') }}" class="link-dark rounded text-white">ایجاد بنر</a></li>
+                            <li><a href="{{ route('admin.banners.index') }}" class="link-dark rounded text-white">مشاهده بنر ها</a></li>
+                            <li><a href="{{ route('admin.banners.show') }}" class="link-dark rounded text-white">نمایش اسلایدی بنر ها</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
         @yield('content')

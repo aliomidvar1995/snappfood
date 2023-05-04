@@ -18,10 +18,10 @@ class FoodCategoryController extends Controller
         if($request->search) {
             $foodCategories = FoodCategory::query()
                         ->where('name', 'like', "%$request->search%")
-                        ->get();
+                        ->paginate(5);
             return view('admin.FoodCategory.index', compact('foodCategories'));
         }
-        $foodCategories = FoodCategory::all();
+        $foodCategories = FoodCategory::query()->paginate(5);
         return view('admin.FoodCategory.index', compact('foodCategories'));
     }
 
@@ -43,7 +43,7 @@ class FoodCategoryController extends Controller
             'name' => $request->name,
             'restaurant_categories_id' => $request->restaurant_categories_id
         ]);
-        return to_route('admin.foodCategories.index');
+        return to_route('admin.foodCategories.index')->with('store', 'اطلاعات با موفقیت ذخیره شد');
     }
 
     /**
@@ -70,7 +70,7 @@ class FoodCategoryController extends Controller
         $foodCategory->update([
             'name' => $request->name
         ]);
-        return to_route('admin.foodCategories.index');
+        return to_route('admin.foodCategories.index')->with('update', 'اطلاعات با موفقیت بروزرسانی شد');
     }
 
     /**
@@ -79,6 +79,6 @@ class FoodCategoryController extends Controller
     public function destroy(FoodCategory $foodCategory)
     {
         $foodCategory->delete();
-        return to_route('admin.foodCategories.index');
+        return to_route('admin.foodCategories.index')->with('delete', 'اطلاعات با موفقیت حذف شد');
     }
 }

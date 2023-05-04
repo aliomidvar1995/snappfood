@@ -22,14 +22,7 @@ class UpdateOffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'off' => ['required']
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'required' => 'تمامی فیلد ها باید پر شوند',
+            'off' => ['required', 'max:100']
         ];
     }
 }

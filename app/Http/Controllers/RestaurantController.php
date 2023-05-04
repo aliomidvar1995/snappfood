@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateRestaurantRequest;
 use App\Models\RestaurantCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantController extends Controller
 {
@@ -19,10 +21,10 @@ class RestaurantController extends Controller
         if($request->search) {
             $restaurants = Auth::user()->restaurants()
                     ->where('name', 'like', "%$request->search%")
-                    ->get();
+                    ->paginate(5);
         return view('seller.restaurant.index', compact('restaurants'));
         }
-        $restaurants = Auth::user()->restaurants;
+        $restaurants = Auth::user()->restaurants()->paginate(5);
         return view('seller.restaurant.index', compact('restaurants'));
     }
 
@@ -40,15 +42,32 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
+        $name = Auth::user()->name;
+        $path = Storage::put("restaurants/$name", $request->file('image'));
+
+        $latitude = $request->lat;
+        $longitude = $request->lng;
+
+        $response = Http::withHeaders(['Api-Key' => 'service.363f2bf49950435c906c6cbef2cc3d89'])
+            ->get("https://api.neshan.org/v5/reverse?lat=$latitude&lng=$longitude");
+        
+        $address = $response['formatted_address'];
+
         Restaurant::query()->create([
+            'image' => $path,
             'name' => $request->name,
+            'days' => $request->days,
+            'start' => $request->start,
+            'end' => $request->end,
             'user_id' => Auth::id(),
             'phone_number' => $request->phone_number,
             'account_number' => $request->account_number,
-            'address' => $request->address,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'address' => $address,
             'restaurant_categories_id' => $request->restaurant_categories_id
         ]);
-        return to_route('seller.restaurants.index');
+        return to_route('seller.restaurants.index')->with('store', 'اطلاعات با موفقیت ذخیره شد');
     }
 
     /**
@@ -73,15 +92,39 @@ class RestaurantController extends Controller
      */
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
     {
+
+        if($request->file('image')) {
+            $name = Auth::user()->name;
+            Storage::delete($restaurant->image);
+            $path = Storage::put("restaurants/$name", $request->file('image'));
+        }
+        else {
+            $path = $restaurant->image;
+        }
+
+        $latitude = $request->lat;
+        $longitude = $request->lng;
+
+        $response = Http::withHeaders(['Api-Key' => 'service.363f2bf49950435c906c6cbef2cc3d89'])
+            ->get("https://api.neshan.org/v5/reverse?lat=$latitude&lng=$longitude");
+        
+        $address = $response['formatted_address'];
+
         $restaurant->update([
+            'image' => $path,
             'name' => $request->name,
+            'days' => $request->days,
+            'start' => $request->start,
+            'end' => $request->end,
             'user_id' => Auth::id(),
             'phone_number' => $request->phone_number,
             'account_number' => $request->account_number,
-            'address' => $request->address,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'address' => $address,
             'restaurant_categories_id' => $request->restaurant_categories_id
         ]);
-        return to_route('seller.restaurants.show', ['restaurant' => $restaurant]);
+        return to_route('seller.restaurants.show', ['restaurant' => $restaurant])->with('update', 'اطلاعات با موفقیت بروزرسانی شد');
     }
 
     /**
@@ -89,7 +132,8 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
+        Storage::delete($restaurant->image);
         $restaurant->delete();
-        return to_route('seller.restaurants.index');
+        return to_route('seller.restaurants.index')->with('delete', 'اطلاعات با موفقیت حذف شد');
     }
 }

@@ -23,14 +23,7 @@ class StoreOffRequest extends FormRequest
     {
         return [
             'off' => ['required'],
-            'food_categories_id' => ['required']
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'required' => 'تمامی فیلد ها باید پر شوند',
+            'food_categories_id' => ['required', 'unique:offs']
         ];
     }
 }

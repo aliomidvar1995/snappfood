@@ -9,6 +9,7 @@ use App\Models\FoodCategory;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
@@ -20,10 +21,10 @@ class FoodController extends Controller
         if($request->search) {
             Food::query()
                 ->where('name', 'like', "%$request->search%")
-                ->get();
+                ->paginate(5);
             return view('seller.food.index', compact('foods'));
         }
-        $foods = Food::all();
+        $foods = Food::query()->paginate(5);
         return view('seller.food.index', compact('foods'));
     }
 
@@ -42,15 +43,21 @@ class FoodController extends Controller
      */
     public function store(StoreFoodRequest $request)
     {
-        // dd($request->all());
+        $name = Restaurant::query()->find($request->restaurant_id)->name;
+        $path = Storage::put("foods/$name", $request->file('image'));
+        // discounted price
+        $discounted_price = (1-($request->off/100)) * $request->price;
         Food::query()->create([
+            'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
-            'discounted_price' => $request->price,
+            'material' => $request->material,
+            'discounted_price' => $discounted_price,
+            'food_party_price' => $discounted_price,
             'food_categories_id' => $request->food_categories_id,
             'restaurant_id' => $request->restaurant_id
         ]);
-        return to_route('seller.foods.index');
+        return to_route('seller.foods.index')->with('store', 'اطلاعات با موفقیت ذخیره شد');
     }
 
     /**
@@ -58,7 +65,7 @@ class FoodController extends Controller
      */
     public function show(Food $food)
     {
-        //
+        return view('seller.food.show', compact('food'));
     }
 
     /**
@@ -75,14 +82,27 @@ class FoodController extends Controller
      */
     public function update(UpdateFoodRequest $request, Food $food)
     {
+        if($request->file('image')) {
+            Storage::delete($food->image);
+            $name = Restaurant::query()->find($request->restaurant_id)->name;
+            $path = Storage::put("foods/$name", $request->file('image'));
+        }
+        else {
+            $path = $food->image;
+        }
+        // discounted price
+        $discounted_price = (1-($request->off/100)) * $request->price;
         $food->update([
+            'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
-            'discounted_price' => $request->price,
+            'material' => $request->material,
+            'discounted_price' => $discounted_price,
+            'food_party_price' => $discounted_price,
             'food_categories_id' => $request->food_categories_id,
             'restaurant_id' => $request->restaurant_id
         ]);
-        return to_route('seller.foods.index');
+        return to_route('seller.foods.show', ['food' => $food])->with('update', 'اطلاعات با موفقیت بروزرسانی شد');
     }
 
     /**
@@ -90,7 +110,17 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
+        Storage::delete($food->image);
         $food->delete();
-        return to_route('seller.foods.index');
+        return to_route('seller.foods.index')->with('delete', 'اطلاعات با موفقیت حذف شد');
+    }
+
+    public function foodParty(Food $food)
+    {
+        $food_party_price = (1-($food->foodCategory->off->off/100)) * $food->discounted_price;
+        $food->update([
+            $food->food_party_price = $food_party_price
+        ]);
+        return to_route('seller.foods.show', ['food' => $food])->with('food-party', 'غذا به فود پارتی اضافه شد');
     }
 }

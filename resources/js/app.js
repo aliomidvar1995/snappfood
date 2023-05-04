@@ -10,3 +10,14 @@ import './bootstrap';
     })
   })()
   
+
+// Flash Messages
+setTimeout(() => {
+  document.querySelector('.alert').classList.remove('show');
+  document.querySelector('.alert').classList.add('hide');
+}, 10000);
+
+document.querySelector('.close-btn').onclick = (e) => {
+  document.querySelector('.alert').classList.remove('show');
+  document.querySelector('.alert').classList.add('hide');
+}

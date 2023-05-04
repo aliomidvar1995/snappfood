@@ -23,17 +23,13 @@ class StoreRestaurantRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => ['required', 'mimes:png,jpg,jpeg', 'max:20000'],
             'name' => ['required', 'string'],
+            'days' => ['required', 'string'],
+            'start' => ['required'],
+            'end' => ['required'],
             'phone_number' => ['required', new PhoneNumber()],
             'account_number' => ['required']
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'required' => 'تمامی فیلد ها باید پر شوند',
-            'string' => 'این فیلد باید حروف باشد'
         ];
     }
 }

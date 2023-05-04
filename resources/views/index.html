@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            html, body {
+                height: 100%;
+            }
+            body {
+                display: grid;
+                place-items: center;
+                overflow-x: hidden;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 25px;
+                background: #e69200;
+                border: none;
+                outline: none;
+                color: white;
+                font-weight: 500;
+                letter-spacing: 1px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                user-select: none;
+                box-sizing: border-box;
+            }
+            .alert {
+                background: #ffdb9b;
+                padding: 20px 40px;
+                min-width: 420px;
+                position: absolute;
+                right: 0px;
+                top: 10px;
+                border-radius: 5px;
+                border-left: 5px solid #ffa502;
+                overflow: hidden;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .alert.showAlert {
+                opacity: 1;
+                pointer-events: all;
+            }
+            .alert.show {
+                animation: show_slide 1s ease forwards;
+            }
+            @keyframes show_slide {
+                0% {
+                    transform: translateX(100%);
+                }
+                40% {
+                    transform: translateX(-10%);
+                }
+                80% {
+                    transform: translateX(0%);
+                }
+                100% {
+                    transform: translateX(-10px);
+                }
+            }
+            .alert.hide {
+                animation: hide_slide 1s ease forwards;
+            }
+            @keyframes hide_slide {
+                0% {
+                    transform: translateX(-10px);
+                }
+                40% {
+                    transform: translateX(0%);
+                }
+                80% {
+                    transform: translateX(-10%);
+                }
+                100% {
+                    transform: translateX(100%);
+                }
+            }
+            .alert .fa-exclamation-circle {
+                position: absolute;
+                left: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #ce8500;
+                font-size: 30px;
+            }
+            .alert .msg {
+                padding: 0 20px;
+                font-size: 18px;
+                color: #ce8500;
+            }
+            .alert .close-btn {
+                position: absolute;
+                right: 0px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: #ffd080;
+                padding: 20px 18px;
+            }
+            .alert .close-btn:hover {
+                background: #ffc706;
+                cursor: pointer;
+            }
+            .close-btn .fa-times {
+                color: #ce8500;
+                font-size: 22px;
+                line-height: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="">Show Alert</button>
+        <div class="alert hide">
+            <span class="fa-exclamation-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg>
+            </span>
+            <span class="msg">Warning: this is a warning alert</span>
+            <span class="close-btn">
+                <span class="fa-times">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                    </svg>
+                </span>
+            </span>
+        </div>
+        <script>
+            document.querySelector('button').onclick = (e) => {
+                document.querySelector('.alert').classList.remove('hide');
+                document.querySelector('.alert').classList.add('show');
+                document.querySelector('.alert').classList.add('showAlert');
+                setTimeout(() => {
+                    document.querySelector('.alert').classList.remove('show');
+                    document.querySelector('.alert').classList.add('hide');
+                }, 3000)
+            }
+            document.querySelector('.close-btn').onclick = (e) => {
+                document.querySelector('.alert').classList.remove('show');
+                document.querySelector('.alert').classList.add('hide');
+            }
+        </script>
+    </body>
+</html>

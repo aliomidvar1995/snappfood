@@ -25,12 +25,4 @@ class UpdateFoodCategoryRequest extends FormRequest
             'name' => ['required', 'string']
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'required' => 'تمامی فیلد ها باید پر شوند',
-            'string' => 'این فیلد باید حروف باشد'
-        ];
-    }
 }

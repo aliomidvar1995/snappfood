@@ -22,19 +22,12 @@ class UpdateFoodRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:20000'],
             'name' => ['required', 'string'],
             'price' => ['required', 'integer'],
+            'material' => ['nullable', 'string'],
             'food_categories_id' => ['required'],
             'restaurant_id' => ['required']
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'required' => 'تمامی فیلد ها باید پر شوند',
-            'string' => 'این فیلد باید حروف باشد',
-            'integer' => 'این فیلد باید اعداد باشد'
         ];
     }
 }

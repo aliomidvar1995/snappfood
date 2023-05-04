@@ -54,14 +54,6 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['required']
-        ], [
-            'required' => 'تمام فیلد ها باید پر شوند',
-            'max:255' => 'حداکثر تعداد کاراکتر های مجاز برای این فیلد 255 می باشد',
-            'min:8' => 'حداقل تعداد کاراکتر برای این فیلد 8 می باشد',
-            'unique' => 'ایمیل تکراری می باشد',
-            'email' => 'ورودی باید ایمیل معتبر باشد',
-            'string' => 'ورودی باید حروف باشد',
-            'confirmed' => 'این فیلد باید دقیقا رمز عبور وارد شده باشد'
         ]);
     }
 

@@ -36,6 +36,7 @@ body {
   min-height: 100vh !important;
   min-height: -webkit-fill-available;
   font-family: BZar, Tahoma, Geneva, sans-serif;
+  overflow-x: hidden;
 }
 
 html {
@@ -89,9 +90,9 @@ html {
   main {
     display: flex;
     flex-wrap: nowrap;
-    height: 100vh;
+    // height: 100vh;
     height: -webkit-fill-available;
-    max-height: 100vh;
+    // max-height: 100vh;
     overflow-x: auto;
     overflow-y: auto;
   }
@@ -182,7 +183,7 @@ html {
 #admin-sidebar {
     overflow-y: auto;
     min-height: 100vh;
-    max-height: 100vh;
+    // max-height: 100vh;
     width: 280px;
 }
 
@@ -207,3 +208,259 @@ html {
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
   }
+
+
+// Flash Messages
+
+// html, body {
+//   height: 100%;
+// }
+// button {
+//   padding: 8px 16px;
+//   font-size: 25px;
+//   background: #e69200;
+//   border: none;
+//   outline: none;
+//   color: white;
+//   font-weight: 500;
+//   letter-spacing: 1px;
+//   border-radius: 5px;
+//   cursor: pointer;
+// }
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+.store {
+  background: lightgreen;
+  padding: 20px 40px;
+  min-width: 420px;
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  border-radius: 5px;
+  border-left: 5px solid darkgreen;
+  overflow: hidden;
+}
+.store.show {
+  animation: show_slide 5s ease forwards;
+}
+@keyframes show_slide {
+  0% {
+      transform: translateX(-100%);
+  }
+  40% {
+      transform: translateX(10%);
+  }
+  80% {
+      transform: translateX(0%);
+  }
+  100% {
+      transform: translateX(10px);
+  }
+}
+.store.hide {
+  animation: hide_slide 5s ease forwards;
+}
+@keyframes hide_slide {
+  0% {
+      transform: translateX(10px);
+  }
+  40% {
+      transform: translateX(0%);
+  }
+  80% {
+      transform: translateX(10%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+.store .fa-exclamation-circle {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: darkgreen;
+  font-size: 30px;
+}
+.store .msg {
+  padding: 0 20px;
+  font-size: 18px;
+  color: darkgreen;
+}
+.store .close-btn {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: lightgreen;
+  padding: 20px 18px;
+}
+.store .close-btn:hover {
+  background: green;
+  cursor: pointer;
+}
+.store .close-btn .fa-times {
+  color: darkgreen;
+  font-size: 22px;
+  line-height: 40px;
+}
+
+// update
+
+.update {
+  background: #ffdb9b;
+  padding: 20px 40px;
+  min-width: 420px;
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  border-radius: 5px;
+  border-left: 5px solid #ffa502;
+  overflow: hidden;
+}
+.update.show {
+  animation: show_slide 5s ease forwards;
+}
+@keyframes show_slide {
+  0% {
+      transform: translateX(-100%);
+  }
+  40% {
+      transform: translateX(10%);
+  }
+  80% {
+      transform: translateX(0%);
+  }
+  100% {
+      transform: translateX(10px);
+  }
+}
+.update.hide {
+  animation: hide_slide 5s ease forwards;
+}
+@keyframes hide_slide {
+  0% {
+      transform: translateX(10px);
+  }
+  40% {
+      transform: translateX(0%);
+  }
+  80% {
+      transform: translateX(10%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+.update .fa-exclamation-circle {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ce8500;
+  font-size: 30px;
+}
+.update .msg {
+  padding: 0 20px;
+  font-size: 18px;
+  color: #ce8500;
+}
+.update .close-btn {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffd080;
+  padding: 20px 18px;
+}
+.update .close-btn:hover {
+  background: #ffc706;
+  cursor: pointer;
+}
+.update .close-btn .fa-times {
+  color: #ce8500;
+  font-size: 22px;
+  line-height: 40px;
+}
+
+// delete
+
+.delete {
+  background: lightsalmon;
+  padding: 20px 40px;
+  min-width: 420px;
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  border-radius: 5px;
+  border-left: 5px solid darkred;
+  overflow: hidden;
+}
+.delete.show {
+  animation: show_slide 5s ease forwards;
+}
+@keyframes show_slide {
+  0% {
+      transform: translateX(-100%);
+  }
+  40% {
+      transform: translateX(10%);
+  }
+  80% {
+      transform: translateX(0%);
+  }
+  100% {
+      transform: translateX(10px);
+  }
+}
+.delete.hide {
+  animation: hide_slide 5s ease forwards;
+}
+@keyframes hide_slide {
+  0% {
+      transform: translateX(10px);
+  }
+  40% {
+      transform: translateX(0%);
+  }
+  80% {
+      transform: translateX(10%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+.delete .fa-exclamation-circle {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: darkred;
+  font-size: 30px;
+}
+.delete .msg {
+  padding: 0 20px;
+  font-size: 18px;
+  color: darkred;
+}
+.delete .close-btn {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: lightsalmon;
+  padding: 20px 18px;
+}
+.delete .close-btn:hover {
+  background: red;
+  cursor: pointer;
+}
+.delete .close-btn .fa-times {
+  color: darkred;
+  font-size: 22px;
+  line-height: 40px;
+}

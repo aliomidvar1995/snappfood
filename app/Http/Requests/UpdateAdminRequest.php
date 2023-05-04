@@ -30,18 +30,4 @@ class UpdateAdminRequest extends FormRequest
             'password_confirmation' => ['required']
         ];
     }
-
-    public function messages(): array
-    {
-        $id = Auth::id();
-        return [
-            'required' => 'تمام فیلد ها باید پر شوند',
-            'max:255' => 'حداکثر تعداد کاراکتر های مجاز برای این فیلد 255 می باشد',
-            'min:8' => 'حداقل تعداد کاراکتر برای این فیلد 8 می باشد',
-            "unique:users,email,$id" => 'ایمیل تکراری می باشد',
-            'email' => 'ورودی باید ایمیل معتبر باشد',
-            'string' => 'ورودی باید حروف باشد',
-            'confirmed' => 'این فیلد باید دقیقا رمز عبور وارد شده باشد'
-        ];
-    }
 }
