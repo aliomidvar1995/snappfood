@@ -16,7 +16,7 @@ class IsCustomer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::user() || Auth::user()->role !== 'customer') {
+        if(Auth::user()->role !== 'customer') {
             return back();
         }
         return $next($request);

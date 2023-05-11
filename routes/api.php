@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\Api\OrderUserController;
 use App\Http\Controllers\Api\RestaurantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,5 +56,17 @@ Route::middleware(['auth:sanctum', 'is-customer'])->group(function() {
             ->name('foods.index');
         Route::get('/restaurants/{restaurant}/foods/{food}', [FoodController::class, 'show'])
             ->name('foods.show');
+
+        // order
+        Route::post('foods/{food}/orders', [OrderUserController::class, 'store'])
+            ->name('orders.store');
+        Route::get('orders', [OrderUserController::class, 'index'])
+            ->name('orders.index');
+        Route::get('orders/{order}', [OrderUserController::class, 'show'])
+            ->name('orders.show');
+        Route::put('orders/{order}', [OrderUserController::class, 'update'])
+            ->name('orders.update');
+        Route::delete('orders/{order}', [OrderUserController::class, 'destroy'])
+            ->name('orders.destroy');
     });
 });

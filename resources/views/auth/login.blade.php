@@ -96,11 +96,11 @@
                                 {{ __('ورود') }}
                             </button>
 
-                            @if (Route::has('password.request'))
+                            {{-- @if (Route::has('password.request'))
                                 <a class="btn btn-link text-decoration-none" href="{{ route('password.request') }}">
                                     {{ __('رمز عبور خود را فراموش کرده اید؟') }}
                                 </a>
-                            @endif
+                            @endif --}}
                         </div>
                         <div class="d-flex justify-content-center">
                             <a class="btn btn-link text-decoration-none" href="{{ route('register') }}">

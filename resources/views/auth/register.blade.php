@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    <title>اسنپ فود | صفحه ثبت نام</title>
+    <title>اسنپ فود | صفحه ثبت نام فروشندگان</title>
 @endsection
 
 @section('content')
@@ -52,7 +52,7 @@
                 </svg>
             </div>
             <div class="card w-50 m-auto shadow">
-                <div class="card-header text-center fw-bold fs-4">{{ __('ثبت نام') }}</div>
+                <div class="card-header text-center fw-bold fs-4">{{ __('ثبت نام فروشندگان') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -91,13 +91,6 @@
                         <div class="form-group mb-2">
                             <label class="mb-2" for="password-confirm">{{ __('تایید رمز عبور') }}</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-                        </div>
-                        <div class="form-group mb-2">
-                            <label class="mb-2" for="role">{{ __('ثبت نام به عنوان') }}</label>
-                            <select class="form-control" name="role" id="role">
-                                <option value="customer">خریدار</option>
-                                <option value="seller">فروشنده</option>
-                            </select>
                         </div>
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">

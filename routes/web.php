@@ -6,6 +6,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\OffController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantCategoryController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\SellerController;
@@ -55,5 +56,15 @@ Route::middleware('auth')->group(function () {
             ->name('foods.edit');
         Route::post('foods/{food}/food-party', [FoodController::class, 'foodParty'])
             ->name('foods.foodParty');
+
+        // orders
+        Route::get('restaurant/{restaurant}/orders', [OrderController::class, 'index'])
+            ->name('orders.index');
+        Route::get('restaurant/{restaurant}/orders/{order}', [OrderController::class, 'show'])
+            ->name('orders.show');
+        Route::get('restaurant/{restaurant}/orders/{order}/edit', [OrderController::class, 'edit'])
+            ->name('orders.edit');
+        Route::put('restaurant/{restaurant}/orders/{order}', [OrderController::class, 'update'])
+            ->name('orders.update');
     });
 });

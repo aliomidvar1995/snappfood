@@ -33,8 +33,10 @@
                 <p class="fs-4">روزهای کاری رستوران: {{ $restaurant->days }}</p>
                 <p class="fs-4">ساعات کاری رستوران: {{ $restaurant->start }} تا {{ $restaurant->end }}</p>
                 <p class="fs-4">آدرس رستوران: {{ $restaurant->address }}</p>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center gap-3">
                     <a class="btn btn-outline-primary" href="{{ route('seller.foods.create', ['restaurant' => $restaurant]) }}">ایجاد غذا</a>
+                    <a class="btn btn-outline-secondary" href="{{ route('seller.orders.index', ['restaurant' => $restaurant]) }}">سفارشات</a>
+                    <a class="btn btn-outline-secondary" href="">گزارشات</a>
                 </div>
             </div>
         </div>
