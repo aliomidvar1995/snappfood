@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | ویرایش غذا</title>

@@ -12,20 +12,7 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'image',
-        'name',
-        'days',
-        'start',
-        'end',
-        'phone_number',
-        'latitude',
-        'longitude',
-        'account_number',
-        'user_id',
-        'restaurant_categories_id',
-        'address'
-    ];
+    protected $guarded = ['id'];
 
     public function restaurantCategory(): BelongsTo
     {
@@ -45,5 +32,15 @@ class Restaurant extends Model
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'restaurant_id');
+    }
+
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class, 'restaurant_id');
+    }
+
+    public function comments(): HasManyThrough
+    {
+        return $this->hasManyThrough(Comment::class, Cart::class, 'restaurant_id', 'cart_id');
     }
 }

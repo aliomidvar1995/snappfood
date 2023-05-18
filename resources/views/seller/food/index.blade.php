@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | لیست غذا ها</title>
@@ -52,7 +52,6 @@
                 <th scope="col">#</th>
                 <th scope="col">نام غذا</th>
                 <th scope="col">دسته بندی غذا</th>
-                <th scope="col">نام رستوران</th>
                 <th scope="col">اقدامات</th>
             </tr>
         </thead>
@@ -62,11 +61,10 @@
                     <th scope="row">{{ $food->id }}</th>
                     <td>{{ $food->name }}</td>
                     <td>{{ $food->foodCategory->name }}</td>
-                    <td>{{ $food->restaurant->name }}</td>
                     <td>
-                        <a class="btn btn-outline-primary" href="{{ route('seller.foods.show', ['food' => $food]) }}">نمایش اطلاعات غذا</a>
-                        <a class="btn btn-outline-warning" href="{{ route('seller.foods.edit', ['food' => $food, 'restaurant' => $food->restaurant]) }}">ویرایش غذا</a>
-                        <form class="d-inline" action="{{ route('seller.foods.destroy', ['food' => $food]) }}" method="post">
+                        <a class="btn btn-outline-primary" href="{{ route('seller.foods.show', ['restaurant' => $restaurant, 'food' => $food]) }}">نمایش اطلاعات غذا</a>
+                        <a class="btn btn-outline-warning" href="{{ route('seller.foods.edit', ['restaurant' => $restaurant, 'food' => $food]) }}">ویرایش غذا</a>
+                        <form class="d-inline" action="{{ route('seller.foods.destroy', ['restaurant' => $restaurant, 'food' => $food]) }}" method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-outline-danger" type="submit">حذف غذا</button>

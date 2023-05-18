@@ -8,9 +8,11 @@ use App\Events\PreparingEvent;
 use App\Events\SendingEvent;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
 
 class OrderController extends Controller
 {
@@ -42,54 +44,50 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Restaurant $restaurant, Order $order)
+    public function show(Restaurant $restaurant, Cart $cart)
     {
-        return view('seller.order.show', compact('restaurant', 'order'));
+        return view('seller.order.show', compact('restaurant', 'cart'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Restaurant $restaurant, Order $order)
+    public function edit(Restaurant $restaurant, Cart $cart)
     {
-        return view('seller.order.edit', compact('restaurant', 'order'));
+        return view('seller.order.edit', compact('restaurant', 'cart'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request,Restaurant $restaurant, Order $order)
+    public function update(UpdateOrderRequest $request,Restaurant $restaurant, Cart $cart)
     {
-        // dd($request->get('status'));
         if($request->get('status') == 'pending') {
-            event(new PendingEvent($order->user->email));
+            event(new PendingEvent($cart->user->email));
         }
         if($request->get('status') == 'preparing') {
-            event(new PreparingEvent($order->user->email));
+            event(new PreparingEvent($cart->user->email));
         }
         if($request->get('status') == 'sending') {
-            event(new SendingEvent($order->user->email));
+            event(new SendingEvent($cart->user->email));
         }
         if($request->get('status') == 'delivered') {
-            $order->update([
-                'status' => $request->get('status'),
-                'end' => now()->format('H:i:s')
+            $cart->update([
+                'status' => $request->input('status'),
+                'delivered_time' => Jalalian::now()->format('H:i:s')
             ]);
-            event(new DeliveredEvent($order->user->email));
-            self::$orders[] = $order;
-            cache()->put('orders', self::$orders);
-            $order->delete();
-            return to_route('seller.orders.index', ['restaurant' => $order->food->restaurant]);
+            event(new DeliveredEvent($cart->user->email));
+            return to_route('seller.archives.index', ['restaurant' => $restaurant]);
         }
-        $order->update(['status' => $request->get('status')]);
+        $cart->update(['status' => $request->get('status')]);
 
-        return to_route('seller.orders.show', ['order' => $order, 'restaurant' => $order->food->restaurant]);
+        return to_route('seller.carts.show', ['cart' => $cart, 'restaurant' => $restaurant]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Cart $cart)
     {
         //
     }

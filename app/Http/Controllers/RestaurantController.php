@@ -42,8 +42,10 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-        $name = Auth::user()->name;
-        $path = Storage::put("restaurants/$name", $request->file('image'));
+        $user_id = Auth::id();
+        $path = Storage::put("restaurants/$user_id", $request->file('image'));
+
+        $path = url('images/'.$path);
 
         $latitude = $request->lat;
         $longitude = $request->lng;

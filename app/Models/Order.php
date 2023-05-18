@@ -12,6 +12,8 @@ class Order extends Model
 
     protected $guarded = ['id'];
 
+    public $timestamps = false;
+
     public function food(): BelongsTo
     {
         return $this->belongsTo(Food::class, 'food_id');
@@ -25,5 +27,10 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function cart(): BelongsTo
+    {
+        return $this->belongsTo(Cart::class, 'cart_id');
     }
 }

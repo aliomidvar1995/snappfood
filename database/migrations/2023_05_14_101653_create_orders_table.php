@@ -13,16 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->default(now()->format('Y-m-d'));
-            $table->time('start')->default(now()->format('H:i:s'));
-            $table->time('end')->nullable();
-            $table->boolean('payment')->default(false);
             $table->integer('count');
-            $table->enum('status', ['pending', 'preparing', 'sending', 'delivered'])->default('pending');
+            $table->integer('total_price');
             $table->unsignedBigInteger('food_id');
-            $table->unsignedBigInteger('restaurant_id');
+            $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
             $table->foreign('user_id')
                         ->references('id')
                         ->on('users')
@@ -31,9 +26,9 @@ return new class extends Migration
                         ->references('id')
                         ->on('foods')
                         ->onDelete('cascade');
-            $table->foreign('restaurant_id')
+            $table->foreign('cart_id')
                         ->references('id')
-                        ->on('restaurants')
+                        ->on('carts')
                         ->onDelete('cascade');
         });
     }

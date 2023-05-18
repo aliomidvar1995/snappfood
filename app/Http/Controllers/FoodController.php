@@ -16,16 +16,16 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Restaurant $restaurant, Request $request)
     {
         if($request->search) {
-            Food::query()
+            $restaurant->foods()
                 ->where('name', 'like', "%$request->search%")
                 ->paginate(5);
             return view('seller.food.index', compact('foods'));
         }
-        $foods = Food::query()->paginate(5);
-        return view('seller.food.index', compact('foods'));
+        $foods = $restaurant->foods()->paginate(5);
+        return view('seller.food.index', compact('restaurant', 'foods'));
     }
 
     /**
@@ -41,10 +41,10 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFoodRequest $request)
+    public function store(StoreFoodRequest $request, Restaurant $restaurant)
     {
-        $name = Restaurant::query()->find($request->restaurant_id)->name;
-        $path = Storage::put("foods/$name", $request->file('image'));
+        $path = Storage::put("foods/$request->restaurant_id", $request->file('image'));
+        $path = url('images/'.$path);
         // discounted price
         $discounted_price = (1-($request->off/100)) * $request->price;
         Food::query()->create([
@@ -57,15 +57,16 @@ class FoodController extends Controller
             'food_categories_id' => $request->food_categories_id,
             'restaurant_id' => $request->restaurant_id
         ]);
-        return to_route('seller.foods.index')->with('store', 'اطلاعات با موفقیت ذخیره شد');
+        return to_route('seller.foods.index', ['restaurant' => $restaurant])
+                ->with('store', 'اطلاعات با موفقیت ذخیره شد');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Food $food)
+    public function show(Restaurant $restaurant, Food $food)
     {
-        return view('seller.food.show', compact('food'));
+        return view('seller.food.show', compact('food', 'restaurant'));
     }
 
     /**
@@ -80,7 +81,7 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFoodRequest $request, Food $food)
+    public function update(UpdateFoodRequest $request,Restaurant $restaurant , Food $food)
     {
         if($request->file('image')) {
             Storage::delete($food->image);
@@ -102,25 +103,28 @@ class FoodController extends Controller
             'food_categories_id' => $request->food_categories_id,
             'restaurant_id' => $request->restaurant_id
         ]);
-        return to_route('seller.foods.show', ['food' => $food])->with('update', 'اطلاعات با موفقیت بروزرسانی شد');
+        return to_route('seller.foods.show', ['restaurant' => $restaurant, 'food' => $food])
+                ->with('update', 'اطلاعات با موفقیت بروزرسانی شد');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food)
+    public function destroy(Restaurant $restaurant, Food $food)
     {
         Storage::delete($food->image);
         $food->delete();
-        return to_route('seller.foods.index')->with('delete', 'اطلاعات با موفقیت حذف شد');
+        return to_route('seller.foods.index', ['restaurant' => $restaurant])
+                ->with('delete', 'اطلاعات با موفقیت حذف شد');
     }
 
-    public function foodParty(Food $food)
+    public function foodParty(Restaurant $restaurant, Food $food)
     {
         $food_party_price = (1-($food->foodCategory->off->off/100)) * $food->discounted_price;
         $food->update([
             $food->food_party_price = $food_party_price
         ]);
-        return to_route('seller.foods.show', ['food' => $food])->with('food-party', 'غذا به فود پارتی اضافه شد');
+        return to_route('seller.foods.show', ['restaurant' => $restaurant, 'food' => $food])
+                ->with('food-party', 'غذا به فود پارتی اضافه شد');
     }
 }

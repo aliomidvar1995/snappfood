@@ -74,17 +74,6 @@
                         </ul>
                     </div>
                 </li>
-                <li class="mb-1">
-                    <button class="btn btn btn-toggle align-items-center rounded collapsed text-white" data-bs-toggle="collapse"
-                        data-bs-target="#food-collapse" aria-expanded="false">
-                        غذا
-                    </button>
-                    <div class="collapse" id="food-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="{{ route('seller.foods.index') }}" class="link-dark rounded text-white">لیست غذاها</a></li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
         </div>
         @yield('content')

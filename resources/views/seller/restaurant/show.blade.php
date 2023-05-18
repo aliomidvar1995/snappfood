@@ -24,7 +24,7 @@
     @endif
     <div class="mx-auto my-5" style="width: 30rem;">
         <div class="card shadow-lg">
-            <img class="card-img-top" src="{{ '/images/'.$restaurant->image }}" alt="">
+            <img class="card-img-top" src="{{ $restaurant->image }}" alt="">
             <div class="card-body">
                 <p class="fs-4">نام رستوران: {{ $restaurant->name }}</p>
                 <p class="fs-4">نوع رستوران: {{ $restaurant->restaurantCategory->name }}</p>
@@ -34,9 +34,7 @@
                 <p class="fs-4">ساعات کاری رستوران: {{ $restaurant->start }} تا {{ $restaurant->end }}</p>
                 <p class="fs-4">آدرس رستوران: {{ $restaurant->address }}</p>
                 <div class="d-flex justify-content-center gap-3">
-                    <a class="btn btn-outline-primary" href="{{ route('seller.foods.create', ['restaurant' => $restaurant]) }}">ایجاد غذا</a>
-                    <a class="btn btn-outline-secondary" href="{{ route('seller.orders.index', ['restaurant' => $restaurant]) }}">سفارشات</a>
-                    <a class="btn btn-outline-secondary" href="">گزارشات</a>
+                    <a class="btn btn-outline-secondary" href="{{ route('seller.foods.index', ['restaurant' => $restaurant]) }}">غذا ها</a>
                 </div>
             </div>
         </div>

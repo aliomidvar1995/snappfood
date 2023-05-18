@@ -40,25 +40,16 @@ class AddressController extends Controller
 
         $response = Http::withHeaders(['Api-Key' => 'service.363f2bf49950435c906c6cbef2cc3d89'])
             ->get("https://api.neshan.org/v5/reverse?lat=$latitude&lng=$longitude");
-        if(!Auth::user()->address) {
             
-            $address = Address::query()->create([
-                'latitude' => $request->validated('latitude'),
-                'longitude' => $request->validated('longitude'),
-                'address' => $response['formatted_address'],
-                'user_id' => Auth::id()
-            ]);
-    
-            return response($address, 200);
-        }
-        else {
-            Auth::user()->address->update([
-                'latitude' => $request->validated('latitude'),
-                'longitude' => $request->validated('longitude'),
-                'address' => $response['formatted_address'],
-            ]);
-            return response(Auth::user()->address, 200);
-        }
+        $address = Address::query()->create([
+            'title' => $request->validated('title'),
+            'latitude' => $request->validated('latitude'),
+            'longitude' => $request->validated('longitude'),
+            'address' => $response['formatted_address'],
+            'user_id' => Auth::id()
+        ]);
+
+        return response($address, 200);
     }
 
     /**
@@ -91,6 +82,7 @@ class AddressController extends Controller
         $response = Http::withHeaders(['Api-Key' => 'service.363f2bf49950435c906c6cbef2cc3d89'])
             ->get("https://api.neshan.org/v5/reverse?lat=$latitude&lng=$longitude");
         $address->update([
+            'title' => $request->validated('title'),
             'latitude' => $request->validated('latitude'),
             'longitude' => $request->validated('longitude'),
             'address' => $response['formatted_address'],
@@ -111,5 +103,27 @@ class AddressController extends Controller
         $address->delete();
         // Auth::user()->addresses()->find($address->id)->delete();
         return response(['delete' => 'اطلاعات با موفقیت حذف شد']);
+    }
+
+    public function setAddress(Address $address)
+    {
+        if($address->user_id == Auth::id()) {
+            $flag = false;
+            foreach(Auth::user()->addresses as $value) {
+                if($value->set == true) {
+                    $flag = true;
+                }
+            }
+            if($flag == false) {
+                $address->update([
+                    'set' => true
+                ]);
+                return response(['msg' => 'آدرس ست شد']);
+            }
+            else {
+                return response(['msg' => 'یک آدرس ست شده است']);
+            }
+
+        }
     }
 }

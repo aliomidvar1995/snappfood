@@ -106,6 +106,17 @@
                         </ul>
                     </div>
                 </li>
+                <li class="mb-1">
+                    <button class="btn btn btn-toggle align-items-center rounded collapsed text-white" data-bs-toggle="collapse"
+                        data-bs-target="#comment-collapse" aria-expanded="false">
+                        نظرات
+                    </button>
+                    <div class="collapse" id="comment-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li><a href="{{ route('admin.comments.index') }}" class="link-dark rounded text-white">مشاهده نظرات</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
         @yield('content')

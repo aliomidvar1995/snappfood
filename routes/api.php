@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\FoodController;
-use App\Http\Controllers\Api\OrderUserController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CustomerController;
@@ -44,6 +45,8 @@ Route::middleware(['auth:sanctum', 'is-customer'])->group(function() {
             ->name('addresses.update');
         Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])
             ->name('addresses.destroy');
+        Route::post('/addresses/{address}/set', [AddressController::class, 'setAddress'])
+            ->name('addresses.set');
 
         // restaurant
         Route::get('/restaurants', [RestaurantController::class, 'index'])
@@ -58,15 +61,29 @@ Route::middleware(['auth:sanctum', 'is-customer'])->group(function() {
             ->name('foods.show');
 
         // order
-        Route::post('foods/{food}/orders', [OrderUserController::class, 'store'])
+        Route::post('restaurants/{restaurant}/orders', [CartController::class, 'store'])
             ->name('orders.store');
-        Route::get('orders', [OrderUserController::class, 'index'])
+        Route::get('carts', [CartController::class, 'index'])
             ->name('orders.index');
-        Route::get('orders/{order}', [OrderUserController::class, 'show'])
+        Route::get('carts/{cart}', [CartController::class, 'show'])
             ->name('orders.show');
-        Route::put('orders/{order}', [OrderUserController::class, 'update'])
+        Route::put('orders/{order}', [CartController::class, 'update'])
             ->name('orders.update');
-        Route::delete('orders/{order}', [OrderUserController::class, 'destroy'])
+        Route::delete('orders/{order}', [CartController::class, 'destroy'])
             ->name('orders.destroy');
+        
+        // pay for a cart
+        Route::post('carts/{cart}/pay', [CartController::class, 'pay'])
+            ->name('orders.pay');
+        
+        // comments
+        Route::post('carts/{cart}/comments', [CommentController::class, 'store'])
+            ->name('comments.store');
+        Route::get('carts/{cart}/comments/{comment}', [CommentController::class, 'show'])
+            ->name('comments.show');
+        Route::put('carts/{cart}/comments/{comment}', [CommentController::class, 'update'])
+            ->name('comments.show');
+        Route::delete('carts/{cart}/comments/{comment}', [CommentController::class, 'destroy'])
+            ->name('comments.show');
     });
 });

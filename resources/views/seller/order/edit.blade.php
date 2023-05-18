@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | تغییر وضعیت سفارش</title>
@@ -11,7 +11,7 @@
             <div class="card w-50 m-auto shadow">
                 <div class="card-header text-center fw-bold fs-4">{{ __('ویرایش وضعیت سفارش') }}</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('seller.orders.update', ['restaurant' => $restaurant, 'order' => $order]) }}">
+                    <form method="POST" action="{{ route('seller.carts.update', ['restaurant' => $restaurant, 'cart' => $cart]) }}">
                         @csrf
                         @method('put')
                         <div class="form-group mb-2">

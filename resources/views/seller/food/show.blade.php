@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | نمایش اطلاعات غذا</title>
@@ -49,7 +49,7 @@
     @endif
     <div class="mx-auto my-5" style="width: 30rem;">
         <div class="card shadow-lg">
-            <img class="card-img-top" src="{{ '/images/' . $food->image }}" alt="">
+            <img class="card-img-top" src="{{ $food->image }}" alt="">
             <div class="card-body">
                 <p class="fs-4">نام غذا: {{ $food->name }}</p>
                 <p class="fs-4">نوع غذا: {{ $food->foodCategory->name }}</p>
@@ -76,7 +76,7 @@
                                 <button type="button" class="btn-close me-auto ms-0 float-right" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="{{ route('seller.foods.foodParty', ['food' => $food]) }}">
+                                <form method="post" action="{{ route('seller.foods.foodParty', ['restaurant' => $restaurant, 'food' => $food]) }}">
                                     @csrf
                                     <p>نام غذا: {{ $food->name }}</p>
                                     @if ($food->foodCategory->off)

@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | لیست سفارشات رستوران</title>
@@ -50,21 +50,23 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">نام غذا</th>
-                <th scope="col">نام سفارش دهنده</th>
+                <th scope="col">نام رستوران</th>
+                <th scope="col">نام خریدار</th>
                 <th scope="col">اقدامات</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($restaurant->orders as $order)
-                <tr>
-                    <th scope="row">{{ $order->id }}</th>
-                    <td>{{ $order->food->name }}</td>
-                    <td>{{ $order->user->name }}</td>
-                    <td>
-                        <a class="btn btn-outline-success" href="{{ route('seller.orders.show', ['restaurant' => $restaurant, 'order' => $order]) }}">نمایش اطلاعات سفارش</a>
-                    </td>
-                </tr>
+            @foreach ($restaurant->carts as $cart)
+                @if ($cart->status != 'selected' && $cart->status != 'delivered')
+                    <tr>
+                        <th scope="row">{{ $cart->id }}</th>
+                        <td>{{ $cart->restaurant->name }}</td>
+                        <td>{{ $cart->user->name }}</td>
+                        <td>
+                            <a class="btn btn-outline-success" href="{{ route('seller.carts.show', ['restaurant' => $restaurant, 'cart' => $cart]) }}">نمایش اطلاعات سفارش</a>
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

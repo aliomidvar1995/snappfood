@@ -13,16 +13,7 @@ class Food extends Model
 
     protected $table = 'foods';
 
-    protected $fillable = [
-        'image',
-        'name',
-        'price',
-        'material',
-        'discounted_price',
-        'food_party_price',
-        'food_categories_id',
-        'restaurant_id'
-    ];
+    protected $guarded = ['id'];
 
     public function foodCategory(): BelongsTo
     {

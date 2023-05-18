@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | ایجاد غذا</title>
@@ -11,7 +11,7 @@
             <div class="card w-50 m-auto shadow">
                 <div class="card-header text-center fw-bold fs-4">{{ __('ایجاد غذا') }}</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('seller.foods.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('seller.foods.store', ['restaurant' => $restaurant]) }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="restaurant_id" value="{{ $restaurant->id }}">
                         <div class="form-group mb-2">

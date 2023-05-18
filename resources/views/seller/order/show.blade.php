@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('layouts.food')
 
 @section('title')
     <title>پنل فروشنده | نمایش اطلاعات سفارش</title>
@@ -22,24 +22,36 @@
         </span>
     </div>
     @endif
-    <div class="mx-auto my-5" style="width: 30rem;">
-        <div class="card shadow-lg">
-            <div class="card-header text-center fs-3">نام سفارش دهنده: {{ $order->user->name }}</div>
-            <div class="card-body">
-                <p class="fs-4">نام غذا: {{ $order->food->name }}</p>
-                <p class="fs-4">آدرس سفارش دهنده: {{ $order->user->address->address }}</p>
-                <p class="fs-4">قیمت نهایی غذا: {{ $order->food->food_party_price }}</p>
-                <p class="fs-4">نام رستوران: {{ $order->food->restaurant->name }}</p>
-                <p class="fs-4">تعداد سفارش: {{ $order->count }}</p>
-                <p class="fs-4">تاریخ سفارش: {{ $order->date }}</p>
-                <p class="fs-4">زمان سفارش: {{ $order->start }}</p>
-                @if ($order->status == 'delivered')
-                    <p class="fs-4">تاریخ تحویل: {{ $order->end }}</p>
-                @endif
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-outline-warning" href="{{ route('seller.orders.edit', ['order' => $order, 'restaurant' => $restaurant]) }}">تغییر وضعیت سفارش</a>
+    @if ($cart->status != 'selected' && $cart->status != 'delivered')
+        <div class="mx-auto my-5" style="width: 30rem;">
+            <div class="card shadow-lg">
+                <div class="card-header text-center fs-3">{{ $cart->user->name }}</div>
+                <div class="card-body">
+                    @foreach ($cart->user->addresses as $address)
+                        @if ($address->set == true)
+                            <p class="fs-4">آدرس سفارش دهنده: {{ $address->address }}</p>
+                        @endif
+                    @endforeach
+                    <hr>
+                    @foreach ($cart->orders as $order)
+                        <p class="fs-4">نام غذا: {{ $order->food->name }}</p>
+                        <p class="fs-4">قیمت نهایی غذا: {{ $order->food->food_party_price }}</p>
+                        <p class="fs-4">تعداد سفارش: {{ $order->count }}</p>
+                        <p class="fs-4">قیمت کل: {{ $order->total_price }}</p>
+                        <hr>
+                    @endforeach
+                    <p class="fs-4 fw-bold">تاریخ سفارش: {{ $cart->date }}</p>
+                    <p class="fs-4">زمان سفارش: {{ $cart->order_time }}</p>
+                    @if ($cart->status == 'delivered')
+                        <p class="fs-4">زمان تحویل: {{ $cart->delivered_time }}</p>
+                    @endif
+                    <hr>
+                    <p class="fs-4 fw-bold text-secondary">قیمت کل: {{ $cart->total_price }} تومان</p>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-outline-warning" href="{{ route('seller.carts.edit', ['cart' => $cart, 'restaurant' => $restaurant]) }}">تغییر وضعیت سفارش</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
