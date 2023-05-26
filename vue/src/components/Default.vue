@@ -17,10 +17,6 @@
         </nav>
 
         <main>
-            <div class="flex flex-col justify-center align-middle">
-                <p>{{ user.name }}</p>
-                <p>{{ user.email }}</p>
-            </div>
             <router-view></router-view>
         </main>
     </div>

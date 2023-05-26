@@ -13,8 +13,10 @@ use App\Models\Cart;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\Restaurant;
+use App\Notifications\PayNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Morilog\Jalali\Jalalian;
 
 class CartController extends Controller
@@ -131,12 +133,16 @@ class CartController extends Controller
 
     public function pay(Cart $cart)
     {
-        if($cart->user_id == Auth::id()) {
+        if($cart->user_id == Auth::id() && $cart->status != 'pay') {
             $cart->update([
                 'status' => 'pay'
             ]);
+
+            // Auth::user()->notify(new PayNotification());
+
+            Notification::send(Auth::user(), new PayNotification());
     
-            event(new PayEvent(Auth::user()->email));
+            // event(new PayEvent(Auth::user()->email));
     
             return response([
                 'msg' => 'پرداخت با موفقیت انجام شد'

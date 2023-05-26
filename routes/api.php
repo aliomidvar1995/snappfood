@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum', 'is-customer'])->group(function() {
     Route::post('/logout', [CustomerController::class, 'logout']);
     Route::put('/register', [CustomerController::class, 'update']);
     Route::delete('/register', [CustomerController::class, 'destroy']);
+    Route::get('/profile', [CustomerController::class, 'index']);
 
 
     
@@ -85,5 +86,9 @@ Route::middleware(['auth:sanctum', 'is-customer'])->group(function() {
             ->name('comments.show');
         Route::delete('carts/{cart}/comments/{comment}', [CommentController::class, 'destroy'])
             ->name('comments.show');
+
+        // nearest restaurants
+        Route::get('/nearest-restaurants', [RestaurantController::class, 'nearest'])
+        ->name('restaurants.nearest');
     });
 });

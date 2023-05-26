@@ -39,7 +39,10 @@ class FoodController extends Controller
      */
     public function show(Restaurant $restaurant, Food $food)
     {
-        return FoodResource::make($restaurant->foods()->find($food->id));
+        if($restaurant->id == $food->restaurant_id) {
+            return FoodResource::make($food);
+        }
+        return response(['msg' => 'unauthorized'], 401);
     }
 
     /**

@@ -27,7 +27,7 @@ class CommentController extends Controller
     public function store(StoreCommentRequest $request, Cart $cart)
     {
 
-        if(Auth::id() == $cart->user_id && !$cart->comment) {
+        if(Auth::id() == $cart->user_id && !$cart->comment && $cart->status == 'delivered') {
             $comment = Comment::query()->create([
                 'content' => $request->validated('content'),
                 'user_id' => Auth::id(),

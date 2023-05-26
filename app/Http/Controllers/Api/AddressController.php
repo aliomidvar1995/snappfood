@@ -19,7 +19,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return AddressResource::collection(Auth::user()->address);
+        return AddressResource::collection(Auth::user()->addresses);
     }
 
     /**
@@ -57,7 +57,11 @@ class AddressController extends Controller
      */
     public function show(Address $address)
     {
-        return AddressResource::make(Auth::user()->address()->find($address->id));
+        if(Auth::check() && Auth::id() == $address->user_id) {
+            return AddressResource::make($address);
+        }
+
+        return response(['msg' => 'unauthorized'], 401);
     }
 
     /**
@@ -125,5 +129,6 @@ class AddressController extends Controller
             }
 
         }
+        return response(['msg' => 'unauthorized'], 401);
     }
 }

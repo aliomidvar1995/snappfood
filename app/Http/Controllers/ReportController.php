@@ -23,7 +23,7 @@ class ReportController extends Controller
 
         if(!empty($request->search) && $request->search == 'week') {
             foreach($restaurant->carts as $cart) {
-                if($cart->date > $last_week) {
+                if($cart->date > $last_week && $cart->status == 'delivered') {
                     $total_price += $cart->total_price;
                     $total_count++;
                 }
@@ -33,7 +33,7 @@ class ReportController extends Controller
         }
         if(!empty($request->search) && $request->search == 'month') {
             foreach($restaurant->carts as $cart) {
-                if($cart->date > $last_month) {
+                if($cart->date > $last_month && $cart->status == 'delivered') {
                     $total_price += $cart->total_price;
                     $total_count++;
                 }
@@ -43,7 +43,7 @@ class ReportController extends Controller
         }
         if(!empty($request->search) && $request->search == 'year') {
             foreach($restaurant->carts as $cart) {
-                if($cart->date > $last_year) {
+                if($cart->date > $last_year && $cart->status == 'delivered') {
                     $total_price += $cart->total_price;
                     $total_count++;
                 }
@@ -52,8 +52,10 @@ class ReportController extends Controller
                 compact('restaurant', 'total_price', 'total_count'));
         }
         foreach($restaurant->carts as $cart) {
-            $total_price += $cart->total_price;
-            $total_count++;
+            if($cart->status == 'delivered') {
+                $total_price += $cart->total_price;
+                $total_count++;
+            }
         }
         return view('seller.report.index', 
             compact('restaurant', 'total_price', 'total_count'));
