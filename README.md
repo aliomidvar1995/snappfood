@@ -60,7 +60,13 @@ php artisan migrate --seed
 cd vue
 ```
 
-#### 10. Run `npm run dev`
+#### 10. Run `npm install`
+
+```bash
+npm install
+```
+
+#### 11. Run `npm run dev`
 
 ```bash
 npm run dev
