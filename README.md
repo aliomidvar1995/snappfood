@@ -36,8 +36,32 @@ php artisan key:generate
 php artisan storage:link
 ```
 
-#### 6. Run migrations
+#### 6. Run `npm install`
+
+```bash
+npm install
+```
+
+#### 7. Run `npm run build`
+
+```bash
+npm run build
+```
+
+#### 8. Run migrations
 
 ```bash
 php artisan migrate --seed
+```
+
+#### 9. API section
+
+```bash
+cd vue
+```
+
+#### 10. Run `npm run dev`
+
+```bash
+npm run dev
 ```

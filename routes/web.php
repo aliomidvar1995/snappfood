@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminCommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FoodCategoryController;
@@ -30,8 +31,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login')->name('login.post');
+Route::get('', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login'])->name('login.post');
 
 Route::middleware('auth')->group(function () {
     Route::prefix('/admin')->middleware(['is-admin'])->name('admin.')->group(function () {
