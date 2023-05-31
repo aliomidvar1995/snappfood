@@ -42,7 +42,6 @@
 </template>
 
 <script setup>
-import store from '../store';
 import { useRouter } from 'vue-router';
 import axiosClient from '../axios';
 import {ref} from 'vue'
