@@ -1,4 +1,4 @@
-<p align="center"><img src="/public/images/snappfood.jpg" width="400" alt="Snapp Food"></p>
+<p align="center"><img src="/storage/app/images/snappfood.jpg" width="400" alt="Snapp Food"></p>
 
 
 ## Installation
