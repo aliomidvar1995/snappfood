@@ -12,7 +12,7 @@ class AdminCommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::all()->where('delete_request', true);
+        $comments = Comment::query()->where('delete_request', true)->paginate(1);
         return view('admin.comment.index', compact('comments'));
     }
 
