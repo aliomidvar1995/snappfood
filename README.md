@@ -24,13 +24,13 @@ composer install
 cp .env.example .env
 ```
 
-#### 5. Set encryption key
+#### 4. Set encryption key
 
 ```bash
 php artisan key:generate
 ```
 
-#### 6. Run migrations
+#### 5. Run migrations
 
 ```bash
 php artisan migrate --seed
