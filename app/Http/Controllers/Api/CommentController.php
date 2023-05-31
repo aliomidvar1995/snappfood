@@ -19,7 +19,11 @@ class CommentController extends Controller
     public function index(Cart $cart)
     {
         $comment = $cart->comment;
-        return CommentResource::make($comment);
+        $reply = $cart->comment->reply;
+        return response([
+            'comment' => CommentResource::make($comment),
+            'reply' => $reply
+        ]);
     }
 
     /**
