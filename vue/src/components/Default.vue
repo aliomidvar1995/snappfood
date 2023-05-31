@@ -13,9 +13,6 @@
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 items-center justify-between">
                         <div class="flex items-center">
-                            <!-- <div class="flex-shrink-0">
-              <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
-            </div> -->
                             <div class="hidden md:block">
                                 <div
                                     class="ml-10 flex items-baseline space-x-4 gap-3"
@@ -40,10 +37,6 @@
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-4 flex items-center md:ml-6">
-                                <!-- <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                <span class="sr-only">View notifications</span>
-                <BellIcon class="h-6 w-6" aria-hidden="true" />
-              </button> -->
 
                                 <!-- Profile dropdown -->
                                 <Menu as="div" class="relative ml-[100px]">
@@ -242,4 +235,5 @@ const userNavigation = [
     { name: "تعیین آدرس", href: {name: 'CreateAddress'} },
     { name: "آدرس ها", href: {name: 'Addresses'} }
 ];
+
 </script>
