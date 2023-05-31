@@ -54,19 +54,25 @@ npm run build
 php artisan migrate --seed
 ```
 
-#### 9. API section
+#### 9. Start artisan development server
+
+```bash
+php artisan serve
+```
+
+#### 10. API section
 
 ```bash
 cd vue
 ```
 
-#### 10. Run `npm install`
+#### 11. Run `npm install`
 
 ```bash
 npm install
 ```
 
-#### 11. Run `npm run dev`
+#### 12. Run `npm run dev`
 
 ```bash
 npm run dev
