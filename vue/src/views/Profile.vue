@@ -9,7 +9,7 @@
 
 </template>
 
-<script setup>
+<scrip setup>
 import { ref } from "vue";
 
 const user = ref({
@@ -21,3 +21,4 @@ user.value.name = JSON.parse(localStorage.getItem("user")).name;
 user.value.email = JSON.parse(localStorage.getItem("user")).email;
 
 </script>
+

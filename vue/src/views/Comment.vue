@@ -18,7 +18,8 @@
                 </div>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">جمع کل کارت: {{ cart.total_price }}</p>
             </div>
-            <p class="rounded-sm mx-3 bg-slate-300 mb-3 font-normal text-gray-700 dark:text-gray-400">{{ comment.content }}</p>
+            <p class="rounded-sm mx-3 bg-slate-300 mb-3 font-normal text-gray-700 dark:text-gray-400">{{ comment?.content }}</p>
+            <p class="mr-9 rounded-sm mx-3 bg-yellow-300 mb-3 font-normal text-gray-700 dark:text-gray-400">{{ reply?.content }}</p>
             <div v-if="!comment.content">
                 <form @submit.prevent="handleComment">
                     <div class="m-3">
@@ -44,6 +45,8 @@ const props = defineProps(['cart_id'])
 const cart = ref([])
 
 const comment = ref({})
+
+const reply = ref({})
 
 const loading = ref(true)
 
@@ -74,12 +77,9 @@ function getComments() {
     axiosClient.get(`/customer/carts/${props.cart_id}/comments`)
     .then((res) => {
         console.log(res.data);
-        comment.value = res.data
+        comment.value = res.data.comment
+        reply.value = res.data.reply
     })
-}
-
-function getReply() {
-    axiosClient.get()
 }
 
 getComments()
