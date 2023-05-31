@@ -211,24 +211,8 @@
 </template>
 
 <script setup>
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axiosClient from "../axios";
-
-const router = useRouter();
-// const store = useStore();
-// const user = store.state.user;
-
-function logout() {
-    axiosClient.post("/logout").then(({ data }) => {
-        console.log(data);
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        router.push({ name: "Login" });
-        return data;
-    });
-}
-
 import {
     Disclosure,
     DisclosureButton,
@@ -240,13 +224,18 @@ import {
 } from "@headlessui/vue";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
-const user = {
-    name: "Tom Cook",
-    email: "tom@example.com",
-    imageUrl:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-const navigation = [{ name: "رستوران ها", href: "#", current: true }];
+const router = useRouter();
+
+function logout() {
+    axiosClient.post("/logout").then(({ data }) => {
+        console.log(data);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        router.push({ name: "Login" });
+        return data;
+    });
+}
+
 const userNavigation = [
     { name: "پروفایل", href: {name: 'Profile'} },
     { name: "ویرایش پروفایل", href: {name: 'EditProfile'} },
