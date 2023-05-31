@@ -80,6 +80,8 @@ Route::middleware(['auth:sanctum', 'is-customer'])->group(function() {
         // comments
         Route::post('carts/{cart}/comments', [CommentController::class, 'store'])
             ->name('comments.store');
+        Route::get('carts/{cart}/comments', [CommentController::class, 'index'])
+            ->name('comments.index');
         Route::get('carts/{cart}/comments/{comment}', [CommentController::class, 'show'])
             ->name('comments.show');
         Route::put('carts/{cart}/comments/{comment}', [CommentController::class, 'update'])

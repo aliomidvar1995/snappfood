@@ -17,7 +17,7 @@
             </div>
         </form>
         @foreach ($comments as $comment)
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-header">
                     غذا ها: 
                     <ul class="me-5">

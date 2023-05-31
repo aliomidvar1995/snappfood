@@ -26,7 +26,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        return CartResource::collection(Auth::user()->carts);
+        $carts = Auth::user()->carts()->paginate(2);
+        return CartResource::collection($carts);
     }
 
     /**
@@ -45,7 +46,7 @@ class CartController extends Controller
                     break;
                 }
             }
-            if($flag == false) {
+            if($flag == false && $request->count > 0) {
                 $cart = Cart::query()->create([
                     'user_id' => Auth::id(),
                     'date' => Jalalian::now()->format('Y/m/d'),
@@ -54,12 +55,22 @@ class CartController extends Controller
                 ]);
                 $cart_id = $cart->id;
             }
+
+            $cart = Cart::query()->find($cart_id);
+
             
             
             foreach(Auth::user()->orders as $order) {
                 if($order->food_id == $request->food_id) {
+                    if($request->count == 0) {
+                        $order->delete();
+                        if($cart->orders()->count() == 0) {
+                            $cart->delete();
+                        }
+                    }
                     $order->update([
-                        'count' => $request->count
+                        'count' => $request->count,
+                        'total_price' => $food->food_party_price * $request->count,
                     ]);
                     return response([
                         'msg' => 'تعداد غذا بروزرسانی شد', 
@@ -70,20 +81,26 @@ class CartController extends Controller
     
             $food = Food::query()->find($request->food_id);
     
-            $order = Order::query()->create([
-                'count' => $request->validated('count'),
-                'food_id' => $request->food_id,
-                'total_price' => $food->food_party_price * $request->count,
-                'cart_id' => $cart_id,
-                'user_id' => Auth::id()
-            ]);
+            if($request->count > 0) {
+                $order = Order::query()->create([
+                    'count' => $request->validated('count'),
+                    'food_id' => $request->food_id,
+                    'total_price' => $food->food_party_price * $request->count,
+                    'cart_id' => $cart_id,
+                    'user_id' => Auth::id()
+                ]);
+            }
             // event(new PendingEvent(Auth::user()->email));
-            $cart = Cart::query()->find($cart_id);
+
             $total_price = 0;
             foreach($cart->orders as $order) {
                 $total_price += $order->total_price;
             }
             $cart->update(['total_price' => $total_price]);
+
+            if($cart->orders()->count() == 0) {
+                $cart->delete();
+            }
     
             return response([
                 'order' => OrderResource::make($order)

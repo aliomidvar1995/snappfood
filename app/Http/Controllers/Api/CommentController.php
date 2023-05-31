@@ -16,9 +16,10 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Cart $cart)
     {
-        //
+        $comment = $cart->comment;
+        return CommentResource::make($comment);
     }
 
     /**

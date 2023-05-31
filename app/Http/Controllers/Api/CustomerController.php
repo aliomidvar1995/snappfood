@@ -58,8 +58,12 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, User $user)
     {
-        Auth::user()->update($request->validated());
-        return response(['update' => 'اطلاعات با موفقیت بروزرسانی شد']);
+        Auth::user()->update([
+            'name' => $request->validated('name'),
+            'email' => $request->validated('email'),
+            'password' => Hash::make($request->validated('password'))
+        ]);
+        return response(['user' => UserResource::make(Auth::user())]);
     }
 
     /**

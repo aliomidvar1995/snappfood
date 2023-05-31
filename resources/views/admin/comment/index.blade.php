@@ -7,7 +7,7 @@
 @section('content')
     <div class="w-50 mx-auto mt-5">
         @foreach ($comments as $comment)
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-header">
                     <p>نظر دهنده: {{ $comment->user->name }}</p>
                     <p>صاحب رستوران: {{ $comment->cart->restaurant->user->name }}</p>

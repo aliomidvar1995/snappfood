@@ -15,7 +15,8 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        return RestaurantResource::collection(Restaurant::all());
+        $restaurants = Restaurant::query()->paginate(1);
+        return RestaurantResource::collection($restaurants);
     }
 
     /**
@@ -87,12 +88,12 @@ class RestaurantController extends Controller
                 $nearest_restaurants[] = $restaurant;
             }
         }
-        if($request->search) {
-            $nearest_restaurants = collect($nearest_restaurants)
-                            ->where('name', 'like', "%$request->search%")
-                            ->all();
-            return response(['restaurants' => RestaurantResource::collection($nearest_restaurants)]);
-        }
+        // if($request->search) {
+        //     $nearest_restaurants = collect($nearest_restaurants)
+        //                     ->where('name', 'like', "%$request->search%")
+        //                     ->all();
+        //     return response(['restaurants' => RestaurantResource::collection($nearest_restaurants)]);
+        // }
         return response([
             'distances' => $distances,
             'restaurants' => RestaurantResource::collection($nearest_restaurants)

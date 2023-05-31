@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    /* تعریف نام فونت */
+    font-family: 'BZar';
+    /* اکسپلورر 9 به بعد */
+    src: url('http://example.com/fonts/BZar.eot');
+    /* بررسی نصب بودن فونت در سیستم کاربر */
+    src: local('bZar'),
+         /* برای برخی از مرورگرها مانند سافاری */
+         local('b Zar'),
+         /* هک برای اکسپلورر 8 و ماقبل */
+         url('http://example.com/fonts/BZar.eot?#iefix') format('embedded-opentype'),
+         /* فرمت مناسب مرورگرهای خیلی جدید */
+         url('http://example.com/fonts/BZar.woff2') format('woff2'),
+         /* فرمت مناسب مرورگرهای تقریبا جدید */
+         url('http://example.com/fonts/BZar.woff') format('woff'),
+         /* تمام مرورگرها به جزء اکسپلورر */
+         url('http://example.com/fonts/BZar.ttf') format('truetype'),
+         /* نسخه های قدیمی سیستم عامل iOS */
+         url('http://example.com/fonts/BZar.svg#BZar') format('svg');
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+}
+
+body {
+  font-family: BZar, Tahoma, Geneva, sans-serif;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}

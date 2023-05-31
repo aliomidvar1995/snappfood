@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\ValidationException;
 
 class AddressController extends Controller
 {
@@ -35,6 +36,21 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
+        foreach(Auth::user()->addresses as $address) {
+            if($address->title == $request->validated('title')) {
+                $latitude = $request->latitude;
+                $longitude = $request->longitude;
+        
+                $response = Http::withHeaders(['Api-Key' => 'service.363f2bf49950435c906c6cbef2cc3d89'])
+                    ->get("https://api.neshan.org/v5/reverse?lat=$latitude&lng=$longitude");
+                $address->update([
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'address' => $response['formatted_address']
+                ]);
+                return response()->noContent();
+            }
+        }
         $latitude = $request->latitude;
         $longitude = $request->longitude;
 
@@ -115,18 +131,15 @@ class AddressController extends Controller
             $flag = false;
             foreach(Auth::user()->addresses as $value) {
                 if($value->set == true) {
-                    $flag = true;
+                    $value->update([
+                        'set' => false
+                    ]);
                 }
             }
-            if($flag == false) {
-                $address->update([
-                    'set' => true
-                ]);
-                return response(['msg' => 'آدرس ست شد']);
-            }
-            else {
-                return response(['msg' => 'یک آدرس ست شده است']);
-            }
+            $address->update([
+                'set' => true
+            ]);
+            return response(['msg' => 'آدرس ست شد']);
 
         }
         return response(['msg' => 'unauthorized'], 401);

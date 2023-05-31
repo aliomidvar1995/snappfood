@@ -18,8 +18,10 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'status' => $this->status,
             'restaurant' => [
                 'name' => $this->restaurant->name,
+                'image' => $this->restaurant->image,
                 'address' => $this->restaurant->address,
                 'orders' => OrderResource::collection($this->orders)
             ],
