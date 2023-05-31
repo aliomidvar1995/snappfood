@@ -30,6 +30,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login.post');
+
 Route::middleware('auth')->group(function () {
     Route::prefix('/admin')->middleware(['is-admin'])->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
