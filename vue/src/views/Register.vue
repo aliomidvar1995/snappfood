@@ -63,7 +63,6 @@
 
 <script setup>
     import {useRouter} from 'vue-router'
-    import store from '../store'
     import { ref } from 'vue';
     import axiosClient from '../axios'
     const router = useRouter();

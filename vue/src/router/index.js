@@ -13,7 +13,6 @@ import Carts from '../views/Carts.vue'
 import Cart from '../views/Cart.vue'
 import Comments from '../views/Comments.vue'
 import Comment from '../views/Comment.vue'
-import store from '../store'
 
 const routes = [
     {
