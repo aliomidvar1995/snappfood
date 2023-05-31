@@ -30,7 +30,13 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-#### 5. Run migrations
+#### 5. Create symbolic link
+
+```bash
+php artisan storage:link
+```
+
+#### 6. Run migrations
 
 ```bash
 php artisan migrate --seed
