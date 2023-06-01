@@ -11,6 +11,7 @@
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ food.name }}</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">قیمت غذا: {{ food.food_party_price }}</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">قیمت کل: {{ food.food_party_price * count }}</p>
                     <svg @click="increase" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-plus-fill inline-block cursor-pointer" viewBox="0 0 16 16">
                         <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
                     </svg>
@@ -39,12 +40,15 @@ import { TailwindPagination } from "laravel-vue-pagination";
 import Loading from '../components/Loading.vue'
 import { onMounted, ref } from "vue"
 import axiosClient from "../axios"
+import { useRouter } from "vue-router";
 
 const props = defineProps(['restaurant_id'])
 
 const foods = ref([])
 
 const count = ref(0)
+
+const router = useRouter()
 
 const loading = ref(true)
 
@@ -74,6 +78,10 @@ const decrease = () => {
 
 const cart = (food_id) => {
     axiosClient.post(`/customer/restaurants/${props.restaurant_id}/orders`, {food_id: food_id, count: count.value})
+    .then((res) => {
+        // console.log(res);
+        router.push({name: 'Carts'})
+    })
 }
 
 </script>

@@ -44,7 +44,6 @@ class FoodController extends Controller
     public function store(StoreFoodRequest $request, Restaurant $restaurant)
     {
         $path = Storage::put("foods/$request->restaurant_id", $request->file('image'));
-        $path = url('images/'.$path);
         // discounted price
         $discounted_price = (1-($request->off/100)) * $request->price;
         Food::query()->create([

@@ -52,7 +52,7 @@
                 @foreach ($banners as $banner)
                     <tr>
                         <th class="align-middle" scope="row">{{ $banner->id }}</th>
-                        <td><img src="{{ '/images/'.$banner->image }}" alt="" width="200"></td>
+                        <td><img src="{{ url('images/'.$banner->image) }}" alt="" width="200"></td>
                         <td class="align-middle">
                             <form
                                 action="{{ route('admin.banners.destroy', ['banner' => $banner]) }}"

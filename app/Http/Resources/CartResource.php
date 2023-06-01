@@ -21,7 +21,7 @@ class CartResource extends JsonResource
             'status' => $this->status,
             'restaurant' => [
                 'name' => $this->restaurant->name,
-                'image' => $this->restaurant->image,
+                'image' => url('images/'.$this->restaurant->image),
                 'address' => $this->restaurant->address,
                 'orders' => OrderResource::collection($this->orders)
             ],

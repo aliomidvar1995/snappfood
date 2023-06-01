@@ -36,7 +36,7 @@ const options = {
   maptype: 'dreamy',
   poi: true,
   traffic: false,
-  center: [36.30284183765441, 59.5958496945331],
+  center: [35.699739, 51.338097],
   zoom: 13
 }
 

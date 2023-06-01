@@ -32,6 +32,7 @@ class BannerController extends Controller
     public function store(StoreBannerRequest $request)
     {
         $path = Storage::putFile('banners', $request->file('image'));
+
         Banner::query()->create([
             'image' => $path
         ]);

@@ -12,7 +12,7 @@
             @else
                 @foreach ($banners as $banner)
                     <div class="carousel-item active" data-bs-interval="3000">
-                        <img src="{{ '/images/'.$banner->image }}" class="d-block w-100" alt="...">
+                        <img src="{{ url('images/'.$banner->image) }}" class="d-block w-100" alt="...">
                     </div>
                 @endforeach
             @endif

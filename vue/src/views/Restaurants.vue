@@ -39,6 +39,7 @@ const loading = ref(true)
 const getResults = (page = 1) => {
     axiosClient.get(`/customer/restaurants?page=${page}`)
     .then((res) => {
+        console.log(res.data);
         restaurants.value = res.data
         loading.value = false
     })

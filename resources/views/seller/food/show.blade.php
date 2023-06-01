@@ -49,7 +49,7 @@
     @endif
     <div class="mx-auto my-5" style="width: 30rem;">
         <div class="card shadow-lg">
-            <img class="card-img-top" src="{{ $food->image }}" alt="">
+            <img class="card-img-top" src="{{ url('images/'.$food->image) }}" alt="">
             <div class="card-body">
                 <p class="fs-4">نام غذا: {{ $food->name }}</p>
                 <p class="fs-4">نوع غذا: {{ $food->foodCategory->name }}</p>

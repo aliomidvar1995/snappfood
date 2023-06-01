@@ -18,13 +18,13 @@ const routes = [
     {
         path: '/',
         name: 'Login',
-        meta: {isGuest: true},
+        meta: {isGuest: true, title: 'ورود'},
         component: Login
     },
     {
         path: '/register',
         name: 'Register',
-        meta: {isGuest: true},
+        meta: {isGuest: true, title: 'ثبت نام'},
         component: Register
     },
     {
@@ -36,60 +36,71 @@ const routes = [
             {
                 path: '/profile',
                 name: 'Profile',
-                component: Profile
+                component: Profile,
+                meta: {title: 'پروفایل'}
             },
             {
                 path: '/profile/edit',
                 name: 'EditProfile',
-                component: EditProfile
+                component: EditProfile,
+                meta: {title: 'ویرایش پروفایل'}
             },
             {
                 path: '/profile/addresses/create',
                 name: 'CreateAddress',
-                component: CreateAddress
+                component: CreateAddress,
+                meta: {title: 'انتخاب آدرس'}
             },
             {
                 path: '/profile/addresses',
                 name: 'Addresses',
-                component: Addresses
+                component: Addresses,
+                meta: {title: 'آدرس ها'}
             },
             {
                 path: '/restaurants',
                 name: 'Restaurants',
-                component: Restaurants
+                component: Restaurants,
+                meta: {title: 'رستوران ها'}
             },
             {
                 path: '/near-restaurants',
                 name: 'NearRestaurants',
-                component: NearRestaurants
+                component: NearRestaurants,
+                meta: {title: 'رستوران های نزدیک'}
             },
             {
                 path: '/restaurants/:restaurant_id/foods',
                 name: 'Foods',
                 component: Foods,
-                props: true
+                props: true,
+                meta: {title: 'غذا ها'}
             },
             {
                 path: '/carts',
                 name: 'Carts',
-                component: Carts
+                component: Carts,
+                meta: {title: 'کارت ها'}
             },
             {
                 path: '/carts/:cart_id',
                 name: 'Cart',
                 component: Cart,
-                props: true
+                props: true,
+                meta: {title: 'کارت'}
             },
             {
                 path: '/comments',
                 name: 'Comments',
-                component: Comments
+                component: Comments,
+                meta: {title: 'نظرات'}
             },
             {
                 path: '/comments/:cart_id',
                 name: 'Comment',
                 component: Comment,
-                props: true
+                props: true,
+                meta: {title: 'نظر و پاسخ'}
             }
         ]
     }
@@ -101,6 +112,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
     if (to.meta.requiresAuth && !localStorage.getItem('token')) {
         next({name: 'Login'});
     }

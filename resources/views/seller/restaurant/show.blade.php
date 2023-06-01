@@ -24,7 +24,7 @@
     @endif
     <div class="mx-auto my-5" style="width: 30rem;">
         <div class="card shadow-lg">
-            <img class="card-img-top" src="{{ $restaurant->image }}" alt="">
+            <img class="card-img-top" src="{{ url('images/'.$restaurant->image) }}" alt="">
             <div class="card-body">
                 <p class="fs-4">نام رستوران: {{ $restaurant->name }}</p>
                 <p class="fs-4">نوع رستوران: {{ $restaurant->restaurantCategory->name }}</p>

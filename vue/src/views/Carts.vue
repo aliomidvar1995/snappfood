@@ -17,7 +17,7 @@
       <div class="flow-root">
         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
           <template v-for="cart in carts.data" :key="cart.id">
-            <li v-if="cart.status == 'selected'" class="py-3 sm:py-4">
+            <li class="py-3 sm:py-4">
               <router-link :to="{ name: 'Cart', params: {cart_id: cart.id} }">
                 <div class="flex items-center space-x-4">
                   <div class="flex-shrink-0">
@@ -37,7 +37,7 @@
                   <div
                     class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
                   >
-                    {{ cart.total_price }}
+                    {{ cart.id }}
                   </div>
                 </div>
               </router-link>
@@ -65,7 +65,8 @@ const carts = ref([]);
 const loading = ref(true);
 
 function getCarts(page = 1) {
-  axiosClient.get(`/customer/carts?page=${page}`).then((res) => {
+  axiosClient.get(`/customer/carts?page=${page}`)
+  .then((res) => {
     console.log(res);
     carts.value = res.data
     loading.value = false;

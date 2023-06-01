@@ -35,12 +35,13 @@ class CartController extends Controller
      */
     public function store(StoreOrderRequest $request, Restaurant $restaurant)
     {
+        // return $request;
         $food = Food::query()->find($request->food_id);
 
         if($food->restaurant_id === $restaurant->id) {
             $flag = false;
             foreach(Auth::user()->carts as $cart) {
-                if($cart->restaurant_id == $restaurant->id) {
+                if($cart->restaurant_id == $restaurant->id && $cart->status == 'selected') {
                     $flag = true;
                     $cart_id = $cart->id;
                     break;
@@ -59,27 +60,41 @@ class CartController extends Controller
             $cart = Cart::query()->find($cart_id);
 
             
-            
-            foreach(Auth::user()->orders as $order) {
-                if($order->food_id == $request->food_id) {
-                    if($request->count == 0) {
-                        $order->delete();
-                        if($cart->orders()->count() == 0) {
-                            $cart->delete();
+            if($cart->orders()->count() > 0) {
+                foreach($cart->orders as $order) {
+                    if($order->food_id == $request->food_id) {
+                        if($request->count == 0) {
+                            $order->delete();
+
+                            $total_price = 0;
+                            foreach($cart->orders as $order) {
+                                $total_price += $order->total_price;
+                            }
+                            $cart->update(['total_price' => $total_price]);
+    
+                            return response([
+                                'msg' => 'تعداد غذا بروزرسانی شد', 
+                                'order' => OrderResource::make($order)
+                            ]);
                         }
+                        $order->update([
+                            'count' => $request->count,
+                            'total_price' => $food->food_party_price * $request->count,
+                        ]);
+
+                        $cart->update([
+                            'total_price' => $cart->total_price += $order->total_price
+                        ]);
+
+                        return response([
+                            'msg' => 'تعداد غذا بروزرسانی شد', 
+                            'order' => OrderResource::make($order)
+                        ]);
                     }
-                    $order->update([
-                        'count' => $request->count,
-                        'total_price' => $food->food_party_price * $request->count,
-                    ]);
-                    return response([
-                        'msg' => 'تعداد غذا بروزرسانی شد', 
-                        'order' => OrderResource::make($order)
-                    ]);
                 }
             }
     
-            $food = Food::query()->find($request->food_id);
+            // $food = Food::query()->find($request->food_id);
     
             if($request->count > 0) {
                 $order = Order::query()->create([
@@ -90,13 +105,10 @@ class CartController extends Controller
                     'user_id' => Auth::id()
                 ]);
             }
-            // event(new PendingEvent(Auth::user()->email));
 
-            $total_price = 0;
-            foreach($cart->orders as $order) {
-                $total_price += $order->total_price;
-            }
-            $cart->update(['total_price' => $total_price]);
+            $cart->update([
+                'total_price' => $cart->total_price += $order->total_price
+            ]);
 
             if($cart->orders()->count() == 0) {
                 $cart->delete();
@@ -105,6 +117,7 @@ class CartController extends Controller
             return response([
                 'order' => OrderResource::make($order)
             ]);
+            // event(new PendingEvent(Auth::user()->email));
         }
         return response(['msg' => 'unauthorized'], 401);
     }
@@ -115,6 +128,11 @@ class CartController extends Controller
     public function show(Cart $cart)
     {
         if(Auth::check() && $cart->user_id == Auth::id()) {
+            // $total_price = 0;
+            // foreach($cart->orders as $order) {
+            //     $total_price += $order->total_price;
+            // }
+            // $cart->update(['total_price' => $total_price]);
             return CartResource::make($cart);
         }
         return response(['msg' => 'unauthorized'], 401);

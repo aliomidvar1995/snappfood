@@ -66,10 +66,7 @@ function getCart() {
 function handleComment() {
     axiosClient.post(`/customer/carts/${props.cart_id}/comments`, {content: content.value})
     .then((res) => {
-        axiosClient.get(`/customer/carts/${props.cart_id}/comments`)
-        .then((res) => {
-            comment.value = res.data
-        })
+        getComments()
     })
 }
 
